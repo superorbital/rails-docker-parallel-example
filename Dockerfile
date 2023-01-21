@@ -11,7 +11,7 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > /etc/
     && apt-get install -y postgresql-client-10
 
 # Node, needed for asset pipeline
-RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && apt-get update \
     && apt-get install -y nodejs \
     && npm install -q -g npm

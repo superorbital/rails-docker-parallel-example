@@ -2,4 +2,6 @@
 name: "Rails Parallel Docker Example"
 steps:
   - command: "buildkite-agent pipeline upload"
+    agents:
+      queue: kubernetes
     label: ":pipeline:"

@@ -22,8 +22,8 @@ steps:
             - name: docker-creds
               secret:
                 secretName: dockerconfigjson
-  - label: "print image result"
+  - label: "pipeline-upload parallel"
     depends_on: image
-    command: buildkite-agent meta-data get "image"
+    command: .buildkite/steps/parallel.sh
     agents:
       queue: kubernetes
