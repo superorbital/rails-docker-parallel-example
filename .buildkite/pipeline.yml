@@ -1,12 +1,29 @@
 steps:
-  - name: ":rspec:"
-    command: "scripts/ci/parallel_specs.sh"
-    artifact_paths: "log/**/*"
-    env:
-      RAILS_ENV: test
-    plugins:
-      - docker-compose#v3.9.0:
-          run: app
-    parallelism: 20
+  - label: ":docker: build image"
+    key: image
     agents:
-      queue: $BUILDKITE_AGENT_META_DATA_QUEUE
+      queue: kubernetes
+    plugins:
+      - kubernetes:
+          podSpec:
+            containers:
+              - name: docker
+                image: crazymax/docker:latest
+                command: [.buildkite/steps/image.sh]
+                volumeMounts:
+                - name: buildkit-client
+                  mountPath: /buildkit/certs
+                - name: docker-creds
+                  mountPath: /creds/.docker
+            volumes:
+            - name: buildkit-client
+              secret:
+                secretName: buildkit-client-certs
+            - name: docker-creds
+              secret:
+                secretName: dockerconfigjson
+  - label: "print image result"
+    depends_on: image
+    command: buildkite-agent meta-data get "image"
+    agents:
+      queue: kubernetes
