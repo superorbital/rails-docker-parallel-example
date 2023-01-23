@@ -16,7 +16,8 @@ spec:
   containers:
   - image: memcached:latest
     name: memcached
-    containerPort: 11211
+    ports:
+    - containerPort: 11211
     readinessProbe:
       tcpSocket:
         port: 11211

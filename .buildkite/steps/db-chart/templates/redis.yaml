@@ -15,7 +15,8 @@ spec:
   containers:
   - image: redis:latest
     name: redis
-    containerPort: 6379
+    ports:
+    - containerPort: 6379
     readinessProbe:
       tcpSocket:
         port: 6379

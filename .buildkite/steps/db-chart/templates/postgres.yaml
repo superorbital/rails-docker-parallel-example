@@ -15,7 +15,8 @@ spec:
   containers:
   - image: postgres:latest
     name: postgres
-    containerPort: 5432
+    ports:
+    - containerPort: 5432
     readinessProbe:
       tcpSocket:
         port: 5432
