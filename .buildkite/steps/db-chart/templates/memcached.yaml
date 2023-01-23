@@ -6,7 +6,7 @@ metadata:
     job: {{ .Values.buildkite.job }}
     db: memcached
   ownerReferences:
-  - apiVersion: batch/v1
+  - apiVersion: v1
     kind: Pod
     name: {{ .Values.buildkite.pod }}
     uid: {{ .Values.buildkite.pod_uid }}
@@ -32,7 +32,7 @@ apiVersion: v1
 kind: Service
 metadata:
   ownerReferences:
-  - apiVersion: batch/v1
+  - apiVersion: v1
     kind: Pod
     name: {{ .Values.buildkite.pod }}
     uid: {{ .Values.buildkite.pod_uid }}
