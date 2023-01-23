@@ -9,7 +9,7 @@ metadata:
     kind: Job
     name: $BUILDKITE_K8S_JOB_NAME
     uid: $BUILDKITE_K8S_JOB_UID
-  name: postgres
+  name: postgres-$BUILDKITE_JOB_ID
   namespace: $BUILDKITE_NAMESPACE
 spec:
   containers:
@@ -19,6 +19,10 @@ spec:
     readinessProbe:
       tcpSocket:
         port: 5432
+    resources:
+      requests:
+        cpu: 500m
+        memory: 128Mi
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 ---

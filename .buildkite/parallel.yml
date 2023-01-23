@@ -8,9 +8,9 @@ steps:
           podSpec:
             serviceAccountName: agent-stack-k8s
             containers:
-              - name: k8s
-                image: bitnami/kubectl
-                command: [.buildkite/steps/dbs.sh]
+              - name: manifests
+                image: bhgedigital/envsubst
+                command: [.buildkite/steps/manifests.sh]
                 env:
                 - name: BUILDKITE_NAMESPACE
                   valueFrom:
@@ -20,6 +20,9 @@ steps:
                   valueFrom:
                     fieldRef:
                       fieldPath: metadata.labels['job-name']
+              - name: manifests-apply
+                image: bitnami/kubectl
+                command: [.buildkite/steps/apply.sh]
               - name: docker
                 image: $BUILT_IMAGE
                 command: [scripts/ci/parallel_specs.sh]
