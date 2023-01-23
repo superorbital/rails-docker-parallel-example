@@ -9,7 +9,7 @@ steps:
             serviceAccountName: agent-stack-k8s
             containers:
               - name: job-uid
-                image: bitnami/kubectl
+                image: portainer/kubectl-shell:latest
                 command: [.buildkite/steps/job_uid.sh]
                 env:
                 - name: BUILDKITE_NAMESPACE
@@ -35,7 +35,7 @@ steps:
                 - name: BUILDKITE_SHELL
                   value: "/bin/sh -e"
               - name: manifests-apply
-                image: bitnami/kubectl
+                image: portainer/kubectl-shell:latest
                 command: [.buildkite/steps/apply.sh]
               - name: docker
                 image: $BUILT_IMAGE
