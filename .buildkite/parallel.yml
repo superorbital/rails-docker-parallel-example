@@ -1,6 +1,6 @@
 steps:
   - label: ":docker: build image"
-    key: image
+    key: parallel-step
     agents:
       queue: kubernetes
     plugins:
