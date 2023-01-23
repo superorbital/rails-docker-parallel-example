@@ -1,16 +1,17 @@
+## TODO: Switch owner to pod
 apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    job: $BUILDKITE_JOB_ID
+    job: {{ .Values.buildkite.job }}
     db: memcached
   ownerReferences:
   - apiVersion: batch/v1
-    kind: Job
-    name: $BUILDKITE_K8S_JOB_NAME
-    uid: $BUILDKITE_K8S_JOB_UID
-  name: memcached-$BUILDKITE_JOB_ID
-  namespace: $BUILDKITE_NAMESPACE
+    kind: Pod
+    name: {{ .Values.buildkite.pod }}
+    uid: {{ .Values.buildkite.pod_uid }}
+  name: memcached-{{ .Values.buildkite.job }}
+  namespace: {{ .Values.buildkite.namespace }}
 spec:
   containers:
   - image: memcached:latest
@@ -31,18 +32,18 @@ kind: Service
 metadata:
   ownerReferences:
   - apiVersion: batch/v1
-    kind: Job
-    name: $BUILDKITE_K8S_JOB_NAME
-    uid: $BUILDKITE_K8S_JOB_UID
+    kind: Pod
+    name: {{ .Values.buildkite.pod }}
+    uid: {{ .Values.buildkite.pod_uid }}
   labels:
-    job: $BUILDKITE_JOB_ID
-  name: memcache-$BUILDKITE_JOB_ID
-  namespace: buildkite
+    job: {{ .Values.buildkite.job }}
+  name: memcache-{{ .Values.buildkite.job }}
+  namespace: {{ .Values.buildkite.namespace }}
 spec:
   ports:
   - port: 11211
     protocol: TCP
     targetPort: 11211
   selector:
-    job: $BUILDKITE_JOB_ID
+    job: {{ .Values.buildkite.job }}
     db: memcached
