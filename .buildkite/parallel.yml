@@ -20,6 +20,8 @@ steps:
                   valueFrom:
                     fieldRef:
                       fieldPath: metadata.labels['job-name']
+                - name: BUILDKITE_SHELL
+                  value: "/bin/sh -e"
               - name: manifests-apply
                 image: bitnami/kubectl
                 command: [.buildkite/steps/apply.sh]
