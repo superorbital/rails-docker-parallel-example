@@ -1,5 +1,5 @@
 steps:
-  - label: ":docker: build image"
+  - label: ":kubernetes: test execution"
     key: parallel-step
     agents:
       queue: kubernetes
